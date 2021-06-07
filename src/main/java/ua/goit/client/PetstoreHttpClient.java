@@ -1,10 +1,11 @@
-package ua.goit.model;
+package ua.goit.client;
 
-public class PetstoreApi {
+public class PetstoreHttpClient {
     private static final String URL = "https://petstore.swagger.io/v2";
     private static final String PET_END_POINT = "/pet";
     private static final String STORE_END_POINT = "/store";
     private static final String USER_END_POINT = "/user";
+    private static final String USER_WITH_ARRAY = "/createWithArray";
 
     public static String getURL() {
         return URL;
@@ -20,5 +21,9 @@ public class PetstoreApi {
 
     public static String getUserEndPoint() {
         return USER_END_POINT;
+    }
+
+    public static String getUserWithArray() {
+        return USER_WITH_ARRAY;
     }
 }

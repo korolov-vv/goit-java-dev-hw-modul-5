@@ -14,12 +14,12 @@ public class User {
 
     public User() {
         this.id = 1;
-//        this.userName = "vasiv";
-//        this.firstName = "Vasyl";
-//        this.lastName = "Ivanov";
-//        this.email = "vasiv@gmail.com";
-//        this.password = "Qwerty123";
-//        this.phone = "+38 097 0465 21 87";
+        this.userName = "vasiv";
+        this.firstName = "Vasyl";
+        this.lastName = "Ivanov";
+        this.email = "vasiv@gmail.com";
+        this.password = "Qwerty123";
+        this.phone = "+38 097 0465 21 87";
         this.userStatus = 0;
     }
 

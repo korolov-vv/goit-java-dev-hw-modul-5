@@ -1,11 +1,8 @@
 package ua.goit.controller;
 
-import ua.goit.command.Command;
-import ua.goit.command.CreateUser;
-import ua.goit.command.Help;
+import ua.goit.command.*;
 import ua.goit.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +15,11 @@ public class MainControler {
         this.view = view;
         this.commands = new ArrayList<>(Arrays.asList(
                 new Help(view),
-                new CreateUser(view)
+                new CreateUser(),
+                new CreateUserWithArray(view),
+                new GetUserByUserName(view),
+                new UpdateUser(view),
+                new DeleteUser(view)
         ));
     }
 
