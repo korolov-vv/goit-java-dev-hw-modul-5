@@ -19,7 +19,9 @@ public class MainControler {
                 new CreateUserWithArray(view),
                 new GetUserByUserName(view),
                 new UpdateUser(view),
-                new DeleteUser(view)
+                new DeleteUser(view),
+                new LogIn(view),
+                new LogOut()
         ));
     }
 

@@ -17,6 +17,8 @@ public class Help implements Command{
         view.write("user -get1 - get user by username");
         view.write("user -update - update the user");
         view.write("user -delete - delete the user");
+        view.write("user -login - log in");
+        view.write("user -logout - log out");
     }
 
     @Override

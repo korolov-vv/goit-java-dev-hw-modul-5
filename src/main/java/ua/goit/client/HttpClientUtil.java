@@ -39,11 +39,28 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareCreateUserWithArray(List<T> entities, String endpoint) {
+    public HttpRequest prepareCreateUserWithArrayRequest(List<T> entities, String endpoint) {
         return HttpRequest.newBuilder()
                 .header("Content-type", "application/json; charset=UTF-8")
                 .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(entities)))
+                .build();
+    }
+
+    public HttpRequest prepareLoginUserRequest(String login, String password) {
+        return HttpRequest.newBuilder()
+                .header("Content-type", "application/json; charset=UTF-8")
+                .uri(URI.create(PetstoreHttpClient.getURL() + PetstoreHttpClient.getUserEndPoint() +
+                        "/login?username=" + "&password=" + password))
+                .GET()
+                .build();
+    }
+
+    public HttpRequest prepareLogOutRequest() {
+        return HttpRequest.newBuilder()
+                .header("Content-type", "application/json; charset=UTF-8")
+                .uri(URI.create(PetstoreHttpClient.getURL() + PetstoreHttpClient.getUserEndPoint() + "/logout"))
+                .GET()
                 .build();
     }
 }

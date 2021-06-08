@@ -37,7 +37,7 @@ public class CreateUserWithArray implements Command {
         UserUtil userUtil = new UserUtil();
         List<User> users = userUtil.createListOfUsers();
         try {
-            HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateUserWithArray(users,
+            HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateUserWithArrayRequest(users,
                     PetstoreHttpClient.getUserEndPoint() + PetstoreHttpClient.getUserWithArray()),
                     HttpResponse.BodyHandlers.ofString());
             if(responseOfCreate.statusCode() == 200) {
