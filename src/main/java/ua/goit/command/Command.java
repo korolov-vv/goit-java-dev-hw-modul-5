@@ -1,7 +1,9 @@
 package ua.goit.command;
 
+import java.io.FileNotFoundException;
+
 public interface Command {
-    void process();
+    void process() throws FileNotFoundException;
 
     String commandName();
 

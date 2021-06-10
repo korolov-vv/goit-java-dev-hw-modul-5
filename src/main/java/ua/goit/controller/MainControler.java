@@ -2,9 +2,14 @@ package ua.goit.controller;
 
 import ua.goit.command.*;
 import ua.goit.command.pet.*;
+import ua.goit.command.store.DeleteOrder;
+import ua.goit.command.store.GetOrderById;
+import ua.goit.command.store.PlaceOrder;
+import ua.goit.command.store.ReturnInventory;
 import ua.goit.command.user.*;
 import ua.goit.view.View;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +35,11 @@ public class MainControler {
                 new CreatePet(view),
                 new UpdatePet(view),
                 new UpdatePetById(view),
-                new UploadPetImage(view)
+                new UploadPetImage(view),
+                new PlaceOrder(),
+                new ReturnInventory(),
+                new GetOrderById(view),
+                new DeleteOrder(view)
         ));
     }
 
@@ -46,7 +55,11 @@ public class MainControler {
             String inputCommand = view.read();
             for (Command command : commands) {
                 if (command.canProcess(inputCommand)) {
-                    command.process();
+                    try {
+                        command.process();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 } else if (inputCommand.equalsIgnoreCase("exit")) {
                     view.write("Good Bye!");

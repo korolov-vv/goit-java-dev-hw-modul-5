@@ -26,6 +26,10 @@ public class Help implements Command{
         view.write("pet -update - update pet");
         view.write("pet -update1 - update pet with form data");
         view.write("pet -img-upload - upload pet's image");
+        view.write("order -create - place order");
+        view.write("inventory - return inventory");
+        view.write("order -get - find order by id");
+        view.write("order -delete - delete order by ID");
     }
 
     @Override

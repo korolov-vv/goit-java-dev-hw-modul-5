@@ -2,11 +2,10 @@ package ua.goit.client;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.net.URI;
 import java.net.http.HttpRequest;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HttpClientUtil<T> {
     Gson gson = new Gson();
@@ -18,9 +17,9 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareGetRequest(String endpoint, String parametr) {
+    public HttpRequest prepareGetRequest(String endpoint, String parameter) {
         return HttpRequest.newBuilder()
-                .uri(URI.create(PetstoreHttpClient.getURL() + endpoint + "/" + parametr))
+                .uri(URI.create(PetstoreHttpClient.getURL() + endpoint + "/" + parameter))
                 .GET()
                 .build();
     }
@@ -58,10 +57,10 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareLogOutRequest() {
+    public HttpRequest prepareGetRequestWithoutData(String endpoint) {
         return HttpRequest.newBuilder()
                 .header("Content-type", "application/json; charset=UTF-8")
-                .uri(URI.create(PetstoreHttpClient.getURL() + PetstoreHttpClient.getUserEndPoint() + "/logout"))
+                .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
                 .GET()
                 .build();
     }
@@ -74,8 +73,8 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, String filePath) {
-        String newFilePath = Arrays.stream(filePath.split(""))
+    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, File filePath) {
+/*        String newFilePath = Arrays.stream(filePath.split(""))
                 .peek((c) -> {
                     if(c.equals("\\")) {
                         c.replace('\\', '/');
@@ -83,13 +82,13 @@ public class HttpClientUtil<T> {
                 })
                 .collect(Collectors.joining());
         String[] st = newFilePath.split("/");
-        String fileName = Arrays.asList(st).get(st.length - 1);
+        String fileName = Arrays.asList(st).get(st.length - 1);*/
         return HttpRequest.newBuilder()
                 .header("Content-type", "multipart/form-data")
                 .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
                 .POST(HttpRequest.BodyPublishers.ofString("additionalMetadata=" + additionalMetaData))
                 .POST(HttpRequest.BodyPublishers.ofString(
-                        "file=@" + fileName + ";type=image/png"))
+                        "file=" + filePath + ";type=image/png"))
                 .build();
     }
 }

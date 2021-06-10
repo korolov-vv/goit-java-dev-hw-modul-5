@@ -7,6 +7,9 @@ public class PetstoreHttpClient {
     private static final String USER_END_POINT = "/user";
     private static final String USER_WITH_ARRAY = "/createWithArray";
     private static final String PETS_BY_STATUS = "/findByStatus";
+    private static final String ORDER = "/order";
+    private static final String PET_INVENTORY = "/inventory";
+
 
     public static String getURL() {
         return URL;
@@ -30,5 +33,13 @@ public class PetstoreHttpClient {
 
     public static String getPetsByStatus() {
         return PETS_BY_STATUS;
+    }
+
+    public static String getOrder() {
+        return ORDER;
+    }
+
+    public static String getPetInventory() {
+        return PET_INVENTORY;
     }
 }

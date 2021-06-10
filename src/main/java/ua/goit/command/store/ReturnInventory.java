@@ -1,34 +1,35 @@
-package ua.goit.command.user;
+package ua.goit.command.store;
 
 import ua.goit.client.HttpClientUtil;
 import ua.goit.client.PetstoreHttpClient;
 import ua.goit.command.Command;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
-public class LogOut implements Command {
+public class ReturnInventory implements Command {
     HttpClient httpClient;
     HttpClientUtil httpClientUtil;
 
-    public LogOut() {
+    public ReturnInventory() {
         httpClient = HttpClient.newBuilder().build();
         httpClientUtil = new HttpClientUtil();
     }
 
     @Override
-    public void process() {
-        logOut();
+    public void process() throws FileNotFoundException {
+        returnInventory();
     }
 
     @Override
     public String commandName() {
-        return "user -logout";
+        return "inventory";
     }
 
-    public void logOut() {
-        String endpoint = PetstoreHttpClient.getUserEndPoint() + "/logout";
+    public void returnInventory() {
+        String endpoint = PetstoreHttpClient.getStoreEndPoint() + PetstoreHttpClient.getPetInventory();
         try {
             HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareGetRequestWithoutData(endpoint),
                     HttpResponse.BodyHandlers.ofString());

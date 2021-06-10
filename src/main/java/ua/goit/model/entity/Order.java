@@ -1,16 +1,27 @@
 package ua.goit.model.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Order {
     private long id;
+    private long petId;
     private int quantity;
-    private Date shipDate;
+    private String shipDate;
     private String status;
     private Boolean complete;
 
-    public Order(long id, int quantity, Date shipDate, String status, Boolean complete) {
+    public Order() {
+        this.id = 0;
+        this.petId = 0;
+        this.quantity = 0;
+        this.shipDate = LocalDateTime.now().toString();
+        this.status = "Delivered";
+        this.complete = false;
+    }
+
+    public Order(long id, int petId, int quantity, String shipDate, String status, Boolean complete) {
         this.id = id;
+        this.petId = petId;
         this.quantity = quantity;
         this.shipDate = shipDate;
         this.status = status;
@@ -25,6 +36,14 @@ public class Order {
         this.id = id;
     }
 
+    public long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(long petId) {
+        this.petId = petId;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -33,11 +52,11 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public Date getShipDate() {
+    public String getShipDate() {
         return shipDate;
     }
 
-    public void setShipDate(Date shipDate) {
+    public void setShipDate(String shipDate) {
         this.shipDate = shipDate;
     }
 
@@ -61,9 +80,10 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
+                ", petId=" + petId +
                 ", quantity=" + quantity +
                 ", shipDate=" + shipDate +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 ", complete=" + complete +
                 '}';
     }
