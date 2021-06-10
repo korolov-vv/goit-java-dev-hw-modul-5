@@ -35,14 +35,13 @@ public class PlaceOrder implements Command {
 
     public void createOrder(Order order) {
         String endpoint = PetstoreHttpClient.getStoreEndPoint() + PetstoreHttpClient.getOrder();
-
         try {
             HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateRequest(order, endpoint),
                     HttpResponse.BodyHandlers.ofString());
             System.out.println(httpClientUtil.prepareCreateRequest(order, endpoint));
             System.out.println(new Gson().toJson(order));
             if(responseOfCreate.statusCode() == 200) {
-                System.out.println("The User was created successful \n" + responseOfCreate.body());
+                System.out.println("The Order was created successful \n" + responseOfCreate.body());
             }else{
                 System.out.println(responseOfCreate.statusCode() + responseOfCreate.body());
             }

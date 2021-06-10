@@ -11,17 +11,17 @@ public class Order {
     private Boolean complete;
 
     public Order() {
-        this.id = 0;
-        this.petId = 0;
-        this.quantity = 0;
+        this.id = 1;
+        this.petId = 1;
+        this.quantity = 1;
         this.shipDate = LocalDateTime.now().toString();
         this.status = "Delivered";
         this.complete = false;
     }
 
-    public Order(long id, int petId, int quantity, String shipDate, String status, Boolean complete) {
-        this.id = id;
-        this.petId = petId;
+    public Order(int quantity, String shipDate, String status, Boolean complete) {
+        this.id = 1;
+        this.petId = 1;
         this.quantity = quantity;
         this.shipDate = shipDate;
         this.status = status;
@@ -82,8 +82,8 @@ public class Order {
                 "id=" + id +
                 ", petId=" + petId +
                 ", quantity=" + quantity +
-                ", shipDate=" + shipDate +
-                ", status=" + status +
+                ", shipDate='" + shipDate + '\'' +
+                ", status='" + status + '\'' +
                 ", complete=" + complete +
                 '}';
     }

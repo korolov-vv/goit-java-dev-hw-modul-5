@@ -31,8 +31,7 @@ public class CreateUser implements Command {
 
     public void createUser() {
         UserUtil userUtil = new UserUtil();
-        User user = new User();
-        userUtil.createUserThrowConsole();
+        User user = userUtil.createUserThrowConsole();
         String endpoint = PetstoreHttpClient.getUserEndPoint();
         try {
             HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateRequest(user, endpoint),
