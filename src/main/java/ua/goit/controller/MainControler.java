@@ -1,6 +1,8 @@
 package ua.goit.controller;
 
 import ua.goit.command.*;
+import ua.goit.command.pet.*;
+import ua.goit.command.user.*;
 import ua.goit.view.View;
 
 import java.util.ArrayList;
@@ -21,7 +23,14 @@ public class MainControler {
                 new UpdateUser(view),
                 new DeleteUser(view),
                 new LogIn(view),
-                new LogOut()
+                new LogOut(),
+                new GetPetById(view),
+                new GetPetsByStatus(view),
+                new DeletePet(view),
+                new CreatePet(view),
+                new UpdatePet(view),
+                new UpdatePetById(view),
+                new UploadPetImage(view)
         ));
     }
 

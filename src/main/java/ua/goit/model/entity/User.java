@@ -1,7 +1,5 @@
 package ua.goit.model.entity;
 
-import java.util.Random;
-
 public class User {
     private long id;
     private String userName;
@@ -25,7 +23,7 @@ public class User {
 
     public User(String userName, String firstName, String lastName, String email, String password,
                 String phone) {
-        this.id = 7;
+        this.id = 70000000;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;

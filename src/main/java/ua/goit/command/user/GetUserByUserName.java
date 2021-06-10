@@ -1,7 +1,8 @@
-package ua.goit.command;
+package ua.goit.command.user;
 
 import ua.goit.client.HttpClientUtil;
 import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
 import ua.goit.view.View;
 
 import java.io.IOException;

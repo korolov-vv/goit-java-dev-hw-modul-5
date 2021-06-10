@@ -1,23 +1,22 @@
-package ua.goit.command;
+package ua.goit.command.pet;
 
-import ua.goit.client.PetstoreHttpClient;
-import ua.goit.model.entity.User;
 import ua.goit.client.HttpClientUtil;
-import ua.goit.model.util.UserUtil;
+import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
+import ua.goit.model.entity.Pet;
+import ua.goit.model.util.PetUtil;
 import ua.goit.view.View;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
-import java.util.List;
 
-public class CreateUserWithArray implements Command {
-
+public class UpdatePet implements Command {
     View view;
     HttpClient httpClient;
     HttpClientUtil httpClientUtil;
 
-    public CreateUserWithArray(View view) {
+    public UpdatePet(View view) {
         this.view = view;
         httpClient = HttpClient.newBuilder().build();
         httpClientUtil = new HttpClientUtil();
@@ -25,23 +24,27 @@ public class CreateUserWithArray implements Command {
 
     @Override
     public void process() {
-        createUserWithArray();
+        PetUtil petUtil = new PetUtil();
+        Pet pet = petUtil.createPetThrowConsole();
+        updatePet(pet);
     }
 
     @Override
     public String commandName() {
-        return "user -create1";
+        return "pet -update";
     }
 
-    public void createUserWithArray() {
-        UserUtil userUtil = new UserUtil();
-        List<User> users = userUtil.createListOfUsers();
+    public void updatePet(Pet pet) {
+        String endpoint = PetstoreHttpClient.getPetEndPoint();
+        String parameter = "";
         try {
-            HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateUserWithArrayRequest(users,
-                    PetstoreHttpClient.getUserEndPoint() + PetstoreHttpClient.getUserWithArray()),
+            HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareUpdateWithData(
+                    endpoint,
+                    parameter,
+                    pet),
                     HttpResponse.BodyHandlers.ofString());
             if(responseOfCreate.statusCode() == 200) {
-                System.out.println("Users were created successful \n" + responseOfCreate.body());
+                System.out.println("The Pet was successfully updated \n" + responseOfCreate.body());
             }else{
                 System.out.println(responseOfCreate.statusCode() + responseOfCreate.body());
             }

@@ -1,18 +1,20 @@
-package ua.goit.command;
+package ua.goit.command.pet;
 
 import ua.goit.client.HttpClientUtil;
+import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
 import ua.goit.view.View;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
-public class LogIn implements Command {
+public class GetPetsByStatus implements Command {
     View view;
     HttpClient httpClient;
     HttpClientUtil httpClientUtil;
 
-    public LogIn(View view) {
+    public GetPetsByStatus(View view) {
         this.view = view;
         httpClient = HttpClient.newBuilder().build();
         httpClientUtil = new HttpClientUtil();
@@ -20,22 +22,21 @@ public class LogIn implements Command {
 
     @Override
     public void process() {
-        view.write("Please enter login:");
-        String login = view.read();
-        view.write("Please enter password:");
-        String password = view.read();
-        logIn(login, password);
+        view.write("Enter status from the list: available, pending, sold");
+        String status = view.read();
+        getPetsByStatus(status);
     }
 
     @Override
     public String commandName() {
-        return "user -login";
+        return "pet -get1";
     }
 
-    public void logIn(String login, String password) {
+    public void getPetsByStatus(String status) {
         try {
-            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareLoginUserRequest(login, password),
-                    HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareGetRequest(
+                    PetstoreHttpClient.getPetEndPoint() + PetstoreHttpClient.getPetsByStatus(),
+                    "?status=" + status), HttpResponse.BodyHandlers.ofString());
             if(responseOfGet.statusCode() == 200) {
                 System.out.println(responseOfGet.body());
             }else{

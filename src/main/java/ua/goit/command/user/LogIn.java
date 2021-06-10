@@ -1,19 +1,19 @@
-package ua.goit.command;
+package ua.goit.command.user;
 
 import ua.goit.client.HttpClientUtil;
-import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
 import ua.goit.view.View;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
-public class DeleteUser implements Command {
+public class LogIn implements Command {
     View view;
     HttpClient httpClient;
     HttpClientUtil httpClientUtil;
 
-    public DeleteUser(View view) {
+    public LogIn(View view) {
         this.view = view;
         httpClient = HttpClient.newBuilder().build();
         httpClientUtil = new HttpClientUtil();
@@ -21,20 +21,22 @@ public class DeleteUser implements Command {
 
     @Override
     public void process() {
-        view.write("Enter username for the user should be deleted: ");
-        String username = view.read();
-        deleteUser(username);
+        view.write("Please enter login:");
+        String login = view.read();
+        view.write("Please enter password:");
+        String password = view.read();
+        logIn(login, password);
     }
 
     @Override
     public String commandName() {
-        return "user -delete";
+        return "user -login";
     }
 
-    private void deleteUser(String username) {
+    public void logIn(String login, String password) {
         try {
-            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareDeleteRequest(
-                    PetstoreHttpClient.getUserEndPoint(), username), HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareLoginUserRequest(login, password),
+                    HttpResponse.BodyHandlers.ofString());
             if(responseOfGet.statusCode() == 200) {
                 System.out.println(responseOfGet.body());
             }else{

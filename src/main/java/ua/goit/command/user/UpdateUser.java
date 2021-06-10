@@ -1,7 +1,8 @@
-package ua.goit.command;
+package ua.goit.command.user;
 
 import ua.goit.client.HttpClientUtil;
 import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
 import ua.goit.model.entity.User;
 import ua.goit.model.util.UserUtil;
 import ua.goit.view.View;
@@ -38,7 +39,7 @@ public class UpdateUser implements Command {
 
     public void updateUser(String name, User user) {
         try {
-            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareUpdateRequest(
+            HttpResponse<String> responseOfGet = httpClient.send(httpClientUtil.prepareUpdateWithData(
                     PetstoreHttpClient.getUserEndPoint(), name, user), HttpResponse.BodyHandlers.ofString());
             if(responseOfGet.statusCode() == 200) {
                 System.out.println("The User was updated successful \n" + responseOfGet.body());

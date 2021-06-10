@@ -1,6 +1,7 @@
-package ua.goit.command;
+package ua.goit.command.user;
 
 import ua.goit.client.PetstoreHttpClient;
+import ua.goit.command.Command;
 import ua.goit.model.entity.User;
 import ua.goit.client.HttpClientUtil;
 import ua.goit.model.util.UserUtil;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
-public class CreateUser implements Command{
+public class CreateUser implements Command {
     private HttpClient httpClient;
     private HttpClientUtil httpClientUtil;
 
