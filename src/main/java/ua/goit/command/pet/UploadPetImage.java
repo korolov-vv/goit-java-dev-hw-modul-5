@@ -28,8 +28,7 @@ public class UploadPetImage implements Command {
         String tag = view.read();
         view.write("Enter image path:");
         String imagePath = view.read();
-        File f = new File(imagePath);
-        uploadImage(id, tag, f);
+        uploadImage(id, tag, imagePath);
     }
 
     @Override
@@ -37,25 +36,14 @@ public class UploadPetImage implements Command {
         return "pet -img-upload";
     }
 
-    public void uploadImage(String id, String additionalData, File imagePath) {
+    public void uploadImage(String id, String additionalData, String imagePath) {
         String endpoint = PetstoreHttpClient.getPetEndPoint();
         HttpResponse<String> responseOfCreate = null;
         try {
             responseOfCreate = httpClient.send(httpClientUtil.prepareUploadAnImageForPet(
                 endpoint + "/" + id + "/uploadImage",
-                additionalData,
-                imagePath
-                ),
+                additionalData, imagePath),
                 HttpResponse.BodyHandlers.ofString());
-
-
-System.out.println(httpClientUtil.prepareUploadAnImageForPet(
-                    endpoint + "/" + id + "/uploadImage",
-                    additionalData,
-                    imagePath
-            ));
-
-
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

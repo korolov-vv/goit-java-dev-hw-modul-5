@@ -1,8 +1,9 @@
 package ua.goit.client;
 
 import com.google.gson.Gson;
+import ua.goit.model.util.FileUtil;
 
-import java.io.File;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.Arrays;
@@ -74,9 +75,9 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, File file) {
+    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, String filePath) {
+        File file = new FileUtil().uploadFile(filePath);
         List<String> name = Arrays.asList(file.getName().split("\\."));
- //       FileOutputStream fos = new FileOutputStream(file);
         return HttpRequest.newBuilder()
                 .header("Content-type", "multipart/form-data")
                 .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
