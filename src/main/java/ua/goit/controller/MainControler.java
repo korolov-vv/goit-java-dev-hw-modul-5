@@ -9,7 +9,7 @@ import ua.goit.command.store.ReturnInventory;
 import ua.goit.command.user.*;
 import ua.goit.view.View;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MainControler {
                 if (command.canProcess(inputCommand)) {
                     try {
                         command.process();
-                    } catch (FileNotFoundException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;

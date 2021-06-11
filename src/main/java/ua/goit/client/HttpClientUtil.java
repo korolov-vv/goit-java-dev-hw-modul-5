@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.net.URI;
 import java.net.http.HttpRequest;
+import java.util.Arrays;
 import java.util.List;
 
 public class HttpClientUtil<T> {
@@ -73,22 +74,14 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, File filePath) {
-/*        String newFilePath = Arrays.stream(filePath.split(""))
-                .peek((c) -> {
-                    if(c.equals("\\")) {
-                        c.replace('\\', '/');
-                    }
-                })
-                .collect(Collectors.joining());
-        String[] st = newFilePath.split("/");
-        String fileName = Arrays.asList(st).get(st.length - 1);*/
+    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, File file) {
+        List<String> name = Arrays.asList(file.getName().split("\\."));
+ //       FileOutputStream fos = new FileOutputStream(file);
         return HttpRequest.newBuilder()
                 .header("Content-type", "multipart/form-data")
                 .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
-                .POST(HttpRequest.BodyPublishers.ofString("additionalMetadata=" + additionalMetaData))
-                .POST(HttpRequest.BodyPublishers.ofString(
-                        "file=" + filePath + ";type=image/png"))
+                .POST(HttpRequest.BodyPublishers.ofString("additionalMetadata=" + additionalMetaData +
+                        "file=" + file + ";type=image/" + name.get(name.size() - 1)))
                 .build();
     }
 }

@@ -38,8 +38,6 @@ public class PlaceOrder implements Command {
         try {
             HttpResponse<String> responseOfCreate = httpClient.send(httpClientUtil.prepareCreateRequest(order, endpoint),
                     HttpResponse.BodyHandlers.ofString());
-            System.out.println(httpClientUtil.prepareCreateRequest(order, endpoint));
-            System.out.println(new Gson().toJson(order));
             if(responseOfCreate.statusCode() == 200) {
                 System.out.println("The Order was created successful \n" + responseOfCreate.body());
             }else{

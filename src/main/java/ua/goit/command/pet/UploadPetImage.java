@@ -28,7 +28,6 @@ public class UploadPetImage implements Command {
         String tag = view.read();
         view.write("Enter image path:");
         String imagePath = view.read();
-        FileReader fr = new FileReader(imagePath);
         File f = new File(imagePath);
         uploadImage(id, tag, f);
     }
@@ -48,6 +47,15 @@ public class UploadPetImage implements Command {
                 imagePath
                 ),
                 HttpResponse.BodyHandlers.ofString());
+
+
+System.out.println(httpClientUtil.prepareUploadAnImageForPet(
+                    endpoint + "/" + id + "/uploadImage",
+                    additionalData,
+                    imagePath
+            ));
+
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
