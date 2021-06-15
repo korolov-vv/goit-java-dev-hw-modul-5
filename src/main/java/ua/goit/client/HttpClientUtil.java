@@ -1,12 +1,13 @@
 package ua.goit.client;
 
 import com.google.gson.Gson;
-import ua.goit.model.util.FileUtil;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import java.io.*;
 import java.net.URI;
 import java.net.http.HttpRequest;
-import java.util.Arrays;
 import java.util.List;
 
 public class HttpClientUtil<T> {
@@ -75,14 +76,16 @@ public class HttpClientUtil<T> {
                 .build();
     }
 
-    public HttpRequest prepareUploadAnImageForPet(String endpoint, String additionalMetaData, String filePath) {
-        File file = new FileUtil().uploadFile(filePath);
-        List<String> name = Arrays.asList(file.getName().split("\\."));
-        return HttpRequest.newBuilder()
-                .header("Content-type", "multipart/form-data")
-                .uri(URI.create(PetstoreHttpClient.getURL() + endpoint))
-                .POST(HttpRequest.BodyPublishers.ofString("additionalMetadata=" + additionalMetaData +
-                        "file=" + file + ";type=image/" + name.get(name.size() - 1)))
-                .build();
+    public static HttpPost prepareUploadAnImageForPet(String endpoint, String additionalMetaData, String filePath) throws FileNotFoundException {
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        HttpPost uploadFileRequest = new HttpPost(URI.create(PetstoreHttpClient.getURL() + endpoint));
+        File file = new File(filePath);
+        builder.addTextBody("additionalMetadata:", additionalMetaData);
+        builder.addBinaryBody("file",
+                file,
+                ContentType.MULTIPART_FORM_DATA,
+                file.getName());
+        uploadFileRequest.setEntity(builder.build());
+        return uploadFileRequest;
     }
 }

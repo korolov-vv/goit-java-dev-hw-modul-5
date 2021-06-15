@@ -1,5 +1,10 @@
 package ua.goit.command.pet;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import ua.goit.client.HttpClientUtil;
 import ua.goit.client.PetstoreHttpClient;
 import ua.goit.command.Command;
@@ -7,7 +12,6 @@ import ua.goit.view.View;
 
 import java.io.*;
 import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 
 public class UploadPetImage implements Command {
     View view;
@@ -37,20 +41,16 @@ public class UploadPetImage implements Command {
     }
 
     public void uploadImage(String id, String additionalData, String imagePath) {
-        String endpoint = PetstoreHttpClient.getPetEndPoint();
-        HttpResponse<String> responseOfCreate = null;
+        CloseableHttpClient DEFAULT_CLIENT = HttpClients.createDefault();
+        String endpoint = PetstoreHttpClient.getPetEndPoint() + "/" + id + "/uploadImage";
         try {
-            responseOfCreate = httpClient.send(httpClientUtil.prepareUploadAnImageForPet(
-                endpoint + "/" + id + "/uploadImage",
-                additionalData, imagePath),
-                HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
+            HttpResponse response = DEFAULT_CLIENT.execute(HttpClientUtil.prepareUploadAnImageForPet(endpoint,
+                    additionalData, imagePath));
+            HttpEntity responseEntity = response.getEntity();
+            String sResponse = EntityUtils.toString(responseEntity, "UTF-8");
+            System.out.println(sResponse);
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (responseOfCreate.statusCode() == 200) {
-            System.out.println("The Pet " + id + " was successfully updated \n" + responseOfCreate.body());
-        } else {
-            System.out.println(responseOfCreate.statusCode() + responseOfCreate.body());
         }
     }
 }
